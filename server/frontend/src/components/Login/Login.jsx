@@ -50,14 +50,14 @@ const Login = ({ onClose }) => {
         }}
         className='modalContainer'
       >
-          <form className="login_panel" style={{}} onSubmit={login}>
-              <div>
-              <span className="input_field">Username </span>
-              <input type="text"  name="username" placeholder="Username" className="input_field" onChange={(e) => setUserName(e.target.value)}/>
+          <form className="login_panel" onSubmit={login}>
+              <div className="login_input_group">
+                <label htmlFor="username">Username</label>
+              <input id="username" type="text" name="username" placeholder="Enter username" className="login_input" value={userName} required onChange={(e) => setUserName(e.target.value)}/>
               </div>
-              <div>
-              <span className="input_field">Password </span>
-              <input name="psw" type="password"  placeholder="Password" className="input_field" onChange={(e) => setPassword(e.target.value)}/>            
+              <div className="login_input_group">
+                 <label htmlFor="password">Password</label>
+              <input id="psw" type="password"  placeholder="Enter password" className="login_input" required value={password} onChange={(e) => setPassword(e.target.value)}/>            
               </div>
               <div>
               <input className="action_button" type="submit" value="Login"/>
