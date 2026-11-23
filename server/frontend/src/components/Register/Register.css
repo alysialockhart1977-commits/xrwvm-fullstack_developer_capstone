@@ -1,65 +1,96 @@
-.register_container{
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  margin-top: 2%;
+.register_container {
+  width: 320px;
+  max-width: 90%;
+  margin: 40px auto;
+  padding: 20px 28px 28px 28px;
   background-color: darkturquoise;
-  min-width: 350px;
-  width: 30%;
+  border-radius: 0;
+  box-shadow: none;
 }
 
-.inputs{
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.text {
+  font-size: 28px;
+  font-weight: 500;
+  color: white;
+}
+
+.close_link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close_icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.inputs {
   display: flex;
   flex-direction: column;
+  gap: 12px;
   align-items: center;
 }
 
-.input{
+.input {
   display: flex;
-  flex-direction:row;
   align-items: center;
+  width: 220px;
+  background-color: transparent;
+  border: none;
+  padding: 0;
 }
 
-.input_field{
-  height:40px;
-  width:200px;
-  margin:.5cm;
-  font-size: medium;
+.img_icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  background-color: white;
 }
 
-.submit_panel{
+.input_field {
+  width: 180px;
+  height: 28px;
+  padding: 3px 8px;
+  border: none;
+  outline: none;
+  background-color: white;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+.input_field::placeholder {
+  color: #777;
+}
+
+.submit_panel {
   display: flex;
-  flex-direction:column;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  justify-content: center;
+  margin-top: 22px;
 }
 
-.submit{
-  margin-left: 30%;
-  margin-right: 30%;
+.submit {
+  width: 208px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid #777;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  color: #555;
+  font-size: 12px;
+  font-weight: 400;
   cursor: pointer;
-  font-size: large;
-  color: rgb(97, 64, 128);
-  border-radius: 10px;
-  height:50px;
 }
 
 .submit:hover {
-  background-color: wheat;
-}
-
-.header{
-  font: 4em sans-serif;
-  color: white;
-  margin: .5cm;
-}
-
-.img_icon{
-  width:40px;
-  margin:.1cm;
-  background-color:#0C9;
-  color:#FFF;
-  border-radius:50px;
-  text-align:center;
-  box-shadow: 2px 2px 3px #999;  
+  background-color: white;
+  color: rgb(97, 64, 128);
 }
