@@ -21,10 +21,10 @@ const Dealers = () => {
         url =
           window.location.origin +
           "/djangoapp/get_dealers/" +
-          state +
+          encodeURIComponent(state) +
           "/";
       }
-
+      console.log("Filtering with URL:", url);
       const res = await fetch(url, {
         method: "GET"
       });
