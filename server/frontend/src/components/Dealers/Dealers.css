@@ -86,3 +86,52 @@ table{
   transform: scale(1.1);
   border: solid lightgray;
 }
+
+.dealers_container {
+  width: 90%;
+  margin: 40px auto;
+}
+
+.dealers_title {
+  text-align: center;
+  color: rgb(97, 64, 128);
+  margin-bottom: 30px;
+}
+
+.dealers_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.dealer_card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dealer_card h3 {
+  color: rgb(97, 64, 128);
+  margin-bottom: 12px;
+}
+
+.dealer_card p {
+  margin: 6px 0;
+  color: #555;
+}
+
+.dealer_button {
+  margin-top: 15px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: rgb(97, 64, 128);
+  color: white;
+  cursor: pointer;
+}
+
+.dealer_button:hover {
+  background-color: rgb(75, 48, 100);
+}
