@@ -135,6 +135,14 @@ def get_dealer_reviews(request, dealer_id):
     if(dealer_id):
         endpoint = "/fetchReviews/dealer/" + str(dealer_id)
         reviews = get_request(endpoint)
+        
+        if reviews is None:
+            return JsonResponse({
+                "status": 503,
+                "message": "Review service unavailable",
+                "reviews": []
+            })
+        
         for review_detail in reviews:
             response = analyze_review_sentiments(review_detail['review'])
             print("Sentiment response:", response)
@@ -153,6 +161,13 @@ def get_dealer_details(request, dealer_id):
     if dealer_id:
         endpoint = "/fetchDealer/" + str(dealer_id)
         dealership = get_request(endpoint)
+
+        if dealership is None:
+            return JsonResponse({
+                "status": 503,
+                "message": "Dealer service unavailable",
+                "dealer": []
+            })
 
         return JsonResponse({
             "status": 200,

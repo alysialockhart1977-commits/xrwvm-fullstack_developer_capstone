@@ -1,27 +1,34 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
 import "./Dealers.css";
 import "../assets/style.css";
-import positive_icon from "../assets/positive.png"
-import neutral_icon from "../assets/neutral.png"
-import negative_icon from "../assets/negative.png"
-import review_icon from "../assets/reviewbutton.png"
+
+import positive_icon from "../assets/positive.png";
+import neutral_icon from "../assets/neutral.png";
+import negative_icon from "../assets/negative.png";
+import review_icon from "../assets/reviewbutton.png";
+
 import Header from '../Header/Header';
 
 const Dealer = () => {
   const [dealer, setDealer] = useState({});
   const [reviews, setReviews] = useState([]);
   const [unreviewed, setUnreviewed] = useState(false);
-  const [postReview, setPostReview] = useState(<></>)
 
   const params = useParams();
   const id = params.id;
 
   const root_url = window.location.origin + "/";
 
-  const dealer_url = root_url + `djangoapp/dealer/${id}`;
-  const reviews_url = root_url + `djangoapp/reviews/dealer/${id}`;
-  const post_review = root_url + `postreview/${id}`;
+  const dealer_url =
+    root_url + `djangoapp/dealer/${id}`;
+
+  const reviews_url =
+    root_url + `djangoapp/reviews/dealer/${id}`;
+
+  const post_review =
+    root_url + `postreview/${id}/`;
 
   const get_dealer = async () => {
     try {
@@ -30,6 +37,8 @@ const Dealer = () => {
       });
 
       const retobj = await res.json();
+
+      console.log("Dealer returned:", retobj);
 
       if (retobj.status === 200) {
         const dealerobjs = Array.from(retobj.dealer);
@@ -52,12 +61,20 @@ const Dealer = () => {
 
       const retobj = await res.json();
 
+      console.log("Reviews returned:", retobj);
+
       if (retobj.status === 200) {
-        if (retobj.reviews && retobj.reviews.length > 0) {
+
+        if (
+          retobj.reviews &&
+          retobj.reviews.length > 0
+        ) {
           setReviews(retobj.reviews);
+          setUnreviewed(false);
         } else {
           setUnreviewed(true);
         }
+
       } else {
         setUnreviewed(true);
       }
@@ -71,63 +88,76 @@ const Dealer = () => {
   const senti_icon = (sentiment) => {
     if (sentiment === "positive") {
       return positive_icon;
-    } else if (sentiment === "negative") {
-      return negative_icon;
-    } else {
-      return neutral_icon;
     }
+
+    if (sentiment === "negative") {
+      return negative_icon;
+    }
+
+    return neutral_icon;
   };
 
   useEffect(() => {
     get_dealer();
     get_reviews();
-
-    if (sessionStorage.getItem("username")) {
-      setPostReview(
-        <a href={post_review}>
-          <img
-            src={review_icon}
-            style={{
-              width: '10%',
-              marginLeft: '10px',
-              marginTop: '10px'
-            }}
-            alt="Post Review"
-          />
-        </a>
-      );
-    }
   }, []);
+
+  const isLoggedIn =
+    sessionStorage.getItem("username") !== null;
 
   return (
     <div style={{ margin: "20px" }}>
       <Header />
 
       <div style={{ marginTop: "10px" }}>
+
         <h1 style={{ color: "grey" }}>
           {dealer.full_name}
-          {postReview}
+
+          {isLoggedIn && (
+            <a href={post_review}>
+              <img
+                src={review_icon}
+                style={{
+                  width: "10%",
+                  marginLeft: "10px",
+                  marginTop: "10px"
+                }}
+                alt="Post Review"
+              />
+            </a>
+          )}
         </h1>
 
         <h4 style={{ color: "grey" }}>
-          {dealer.city},
-          {dealer.address},
-          Zip - {dealer.zip},
-          {dealer.state}
+          {dealer.city}
+          {dealer.city && ", "}
+          {dealer.address}
+          {dealer.zip && `, Zip - ${dealer.zip}`}
+          {dealer.state && `, ${dealer.state}`}
         </h4>
+
       </div>
 
       <div className="reviews_panel">
 
-        {reviews.length === 0 && unreviewed === false ? (
-          <div>Loading Reviews....</div>
+        {reviews.length === 0 && !unreviewed ? (
+          <div>
+            Loading Reviews....
+          </div>
 
-        ) : unreviewed === true ? (
-          <div>No reviews yet!</div>
+        ) : unreviewed ? (
+          <div>
+            No reviews yet!
+          </div>
 
         ) : (
           reviews.map((review, index) => (
-            <div className="review_panel" key={index}>
+
+            <div
+              className="review_panel"
+              key={review._id || index}
+            >
 
               <img
                 src={senti_icon(review.sentiment)}
@@ -150,6 +180,7 @@ const Dealer = () => {
               </div>
 
             </div>
+
           ))
         )}
 

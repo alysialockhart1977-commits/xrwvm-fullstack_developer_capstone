@@ -27,21 +27,20 @@ const PostReview = () => {
       sessionStorage.getItem("firstname") +
       " " +
       sessionStorage.getItem("lastname");
-
-    // If first and last name are stored as null, use username
+  
     if (name.includes("null")) {
       name = sessionStorage.getItem("username");
     }
-
+  
     if (!model || !review || !date || !year) {
       alert("All details are mandatory");
       return;
     }
-
+  
     const model_split = model.split(" ");
     const make_chosen = model_split[0];
     const model_chosen = model_split.slice(1).join(" ");
-
+  
     const jsoninput = JSON.stringify({
       name: name,
       dealership: id,
@@ -72,12 +71,12 @@ const PostReview = () => {
         window.location.href =
           window.location.origin + "/dealer/" + id + "/";
       } else {
-        alert("Review could not be posted.");
+        alert("Review could not be posted: " + json.message);
       }
 
     } catch (error) {
       console.log("Error posting review:", error);
-      alert("Review could not be posted.");
+      alert("There was an error posting the review.");
     }
   };
 
@@ -114,14 +113,6 @@ const PostReview = () => {
 
       setCarmodels(carmodelsarr);
 
-      // Automatically select the first car
-      if (carmodelsarr.length > 0) {
-        setModel(
-          carmodelsarr[0].CarMake +
-          " " +
-          carmodelsarr[0].CarModel
-        );
-      }
 
     } catch (error) {
       console.log("Error loading cars:", error);
@@ -168,7 +159,7 @@ const PostReview = () => {
             value={model}
             onChange={(e) => setModel(e.target.value)}
           >
-            <option value="" disabled hidden>
+            <option value="" disabled>
               Choose Car Make and Model
             </option>
 
